@@ -27,7 +27,7 @@ public class ApiUserController {
     }
 
     @GetMapping("{id}")
-    public Optional<User> getUserByID(@PathVariable String id) {
+    public User getUserByID(@PathVariable String id) {
         return service.getUserById(id);
     }
 

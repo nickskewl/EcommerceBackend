@@ -1,13 +1,13 @@
 package com.example.ecom.services;
 
 import com.example.ecom.models.Address;
+import com.example.ecom.models.Order;
 import com.example.ecom.models.User;
-import com.example.ecom.repository.UserRepository;
+import com.example.ecom.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -17,14 +17,14 @@ import java.util.UUID;
 public class UserService {
 
     @Autowired
-    UserRepository userRepository;
+    UsersRepository userRepository;
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findAllUsers();
     }
 
-    public Optional<User> getUserById(String id) {
-        return userRepository.findById(id);
+    public User getUserById(String id) {
+        return userRepository.findUserById(id);
     }
 
     public User createUser(User user) {

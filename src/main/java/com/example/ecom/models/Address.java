@@ -1,11 +1,14 @@
 package com.example.ecom.models;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author nitesh
  */
-@Data
+@Getter
+@Setter
 public class Address {
     private String id;
     private String street;
@@ -13,5 +16,6 @@ public class Address {
     private String state;
     private String country;
     private String zipCode;
+    @JsonProperty("isDefaultAddress")
     private boolean isDefaultAddress;
 }

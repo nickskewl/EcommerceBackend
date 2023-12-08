@@ -18,6 +18,20 @@ public class DbHelper {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    public <T> List<T> getAllEntities(Class<T> clazz, Map<String, Object> queryParams) {
+        Query query = new Query();
+        if (!CollectionUtils.isEmpty(queryParams)) {
+            for (Map.Entry<String, Object> entry : queryParams.entrySet()) {
+                query.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
+            }
+        }
+        return mongoTemplate.find(query, clazz);
+    }
+
+    public <T> List<T> getAllEntities(Class<T> clazz) {
+        return mongoTemplate.findAll(clazz);
+    }
+
     public <T> T getOne(Class<T> clazz, Map<String, Object> queryParams) {
         Query query = new Query();
         if (!CollectionUtils.isEmpty(queryParams)) {
@@ -46,19 +60,5 @@ public class DbHelper {
             }
         }
         mongoTemplate.remove(query, clazz);
-    }
-
-    public <T> List<T> getAllEntities(Class<T> clazz) {
-        return mongoTemplate.findAll(clazz);
-    }
-
-    public <T> List<T> getAllEntities(Class<T> clazz, Map<String, Object> queryParams) {
-        Query query = new Query();
-        if (!CollectionUtils.isEmpty(queryParams)) {
-            for (Map.Entry<String, Object> entry : queryParams.entrySet()) {
-                query.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
-            }
-        }
-        return mongoTemplate.find(query, clazz);
     }
 }

@@ -2,7 +2,6 @@ package com.example.ecom.repository;
 
 import com.example.ecom.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
@@ -15,30 +14,31 @@ import java.util.Map;
  */
 @Repository
 public class UsersRepository {
+
     @Autowired
-    MongoTemplate mongoTemplate;
+    DbHelper dbHelper;
 
     public List<User> findAllUsers() {
-        return DbUtil.getAllEntities(User.class);
+        return dbHelper.getAllEntities(User.class);
     }
 
     public User findUserById(String id) {
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("_id", id);
-        return DbUtil.getOne(User.class, queryParams);
+        return dbHelper.getOne(User.class, queryParams);
     }
 
     public void save(User user) {
-        DbUtil.insert(user);
+        dbHelper.insert(user);
     }
 
     public void deleteAll() {
-        DbUtil.delete(User.class, Collections.emptyMap());
+        dbHelper.delete(User.class, Collections.emptyMap());
     }
 
     public void deleteById(String id) {
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("_id", id);
-        DbUtil.delete(User.class, queryParams);
+        dbHelper.delete(User.class, queryParams);
     }
 }

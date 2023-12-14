@@ -14,18 +14,11 @@ import java.util.Map;
  * @author nitesh
  */
 @Component
-public class DbUtil {
-
-    private static MongoTemplate mongoTemplate;
-
-    private MongoTemplate mongoTemplateService;
-
+public class DbHelper {
     @Autowired
-    private DbUtil(MongoTemplate mongoTemplateService) {
-        mongoTemplate = mongoTemplateService;
-    }
+    private MongoTemplate mongoTemplate;
 
-    public static <T> List<T> getAllEntities(Class<T> clazz, Map<String, Object> queryParams) {
+    public <T> List<T> getAllEntities(Class<T> clazz, Map<String, Object> queryParams) {
         Query query = new Query();
         if (!CollectionUtils.isEmpty(queryParams)) {
             for (Map.Entry<String, Object> entry : queryParams.entrySet()) {
@@ -35,11 +28,11 @@ public class DbUtil {
         return mongoTemplate.find(query, clazz);
     }
 
-    public static <T> List<T> getAllEntities(Class<T> clazz) {
+    public <T> List<T> getAllEntities(Class<T> clazz) {
         return mongoTemplate.findAll(clazz);
     }
 
-    public static <T> T getOne(Class<T> clazz, Map<String, Object> queryParams) {
+    public <T> T getOne(Class<T> clazz, Map<String, Object> queryParams) {
         Query query = new Query();
         if (!CollectionUtils.isEmpty(queryParams)) {
             for (Map.Entry<String, Object> entry : queryParams.entrySet()) {
@@ -49,14 +42,14 @@ public class DbUtil {
         return mongoTemplate.findOne(query, clazz);
     }
 
-    public static <T> void insert(T entity) {
+    public <T> void insert(T entity) {
         if (entity == null) {
             throw new IllegalArgumentException("Null Entity to save");
         }
         mongoTemplate.save(entity);
     }
 
-    public static <T> void delete(Class<T> clazz, Map<String, Object> queryParams) {
+    public <T> void delete(Class<T> clazz, Map<String, Object> queryParams) {
         if (clazz == null) {
             throw new IllegalArgumentException("Null Entity to delete");
         }
